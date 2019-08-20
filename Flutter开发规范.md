@@ -105,3 +105,16 @@ abstract class Predicate<E> {
 #### 混合分包
 
 #### Flutter项目
+- |--lib
+    * |--common
+		* |-- base
+	* |--entry
+	* |--model
+	* |--pages
+	* |--personter
+	* |--provide
+	* |--res
+	* |--router
+	* |--test
+	* |--ui
+	* |--widget
