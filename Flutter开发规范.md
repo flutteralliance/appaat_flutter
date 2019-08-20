@@ -107,7 +107,7 @@ abstract class Predicate<E> {
 #### Flutter项目
 - |--lib
     * |--common
-		* |-- base
+		* |-- common.base
 	* |--entry
 	* |--model
 	* |--pages
