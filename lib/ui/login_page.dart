@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:appaat_flutter/base/base_stateful_widget.dart';
-import 'package:appaat_flutter/utils/flutter_screenutil.dart';
+
+/// common
+import 'package:appaat_flutter/common/base/base_widget.dart';
 
 ///
 /// <pre>
@@ -11,19 +12,14 @@ import 'package:appaat_flutter/utils/flutter_screenutil.dart';
 ///     version: 1.0
 /// </pre>
 ///
-// ignore: must_be_immutable
-class LoginPage extends BaseWidget {
+class LoginPage extends BaseStatefulWidget {
   @override
-  BaseWidgetState<BaseWidget> getState() {
-    return new LoginPageState();
-  }
+  State<StatefulWidget> createState() => LoginPageState();
 }
 
-class LoginPageState extends BaseWidgetState<LoginPage> {
+class LoginPageState extends BaseState<LoginPage> {
   @override
-  Widget buildWidget(BuildContext context) {
-    ///屏幕适配方案 默认 width : 1080px , height:1920px , allowFontScaling:false
-    ScreenUtil.instance = ScreenUtil.getInstance()..init(context);
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -37,12 +33,6 @@ class LoginPageState extends BaseWidgetState<LoginPage> {
     );
   }
 
-  @override
-  void onCreate() {}
-
-  @override
-  void onDestroy() {}
-
   Widget loginBody() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 80),
@@ -51,8 +41,8 @@ class LoginPageState extends BaseWidgetState<LoginPage> {
         children: <Widget>[
           Image(
             image: AssetImage("images/ic_launcher.png"),
-            width: screenUtil.setWidth(300),
-            height: screenUtil.setHeight(300),
+            width: 300,
+            height: 300,
           )
         ],
       ),

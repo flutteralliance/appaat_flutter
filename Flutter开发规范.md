@@ -81,9 +81,46 @@ abstract class Predicate<E> {
   }
 ```
 
+#### 不要在运算符中检查null
++ 只有在右侧不为空时才调用==方法。
+
+```Dart
+  /// 推荐
+  class Person {
+    final String name;
+    // ···
+    bool operator ==(other) => other is Person && name == other.name;
+
+    int get hashCode => name.hashCode;
+  }
+  
+  /// 不推荐
+  class Person {
+    final String name;
+    // ···
+    bool operator ==(other) => other != null && ...
+  }
+```
+
 ### Flutter 开发规范
 
-#### 文件
+#### 导入包
+
+```Dart
+import 'package:flutter/material.dart';
+
+/// index
+//export 'package:appaat_flutter/res/index_res.dart';
+export 'package:appaat_flutter/provide/index_provide.dart';
+export 'package:appaat_flutter/router/index_router.dart';
+/// app common
+import '../app.dart';
+export '../app.dart';
+/// utils
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:appaat_flutter/utils/dialog_utils.dart';
+```
 
 #### 页面跳转
 ```Dart
@@ -111,7 +148,6 @@ abstract class Predicate<E> {
 	* |--entry
 	* |--model
 	* |--pages
-	* |--personter
 	* |--provide
 	* |--res
 	* |--router

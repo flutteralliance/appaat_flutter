@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:appaat_flutter/utils/flutter_screenutil.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ///
 /// <pre>
@@ -11,9 +11,8 @@ import 'package:appaat_flutter/utils/flutter_screenutil.dart';
 /// </pre>
 ///
 class BaseFunction {
-
   ///加载进度框Widget
-  Widget loadingWidget(bool isShowLoading,ScreenUtil screenUtil) {
+  Widget loadingWidget(bool isShowLoading, ScreenUtil screenUtil) {
     return Visibility(
       visible: isShowLoading,
       child: Container(
@@ -36,7 +35,8 @@ class BaseFunction {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                CircularProgressIndicator(strokeWidth: 4.0,
+                CircularProgressIndicator(
+                  strokeWidth: 4.0,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: screenUtil.setHeight(30)),
@@ -55,7 +55,7 @@ class BaseFunction {
   }
 
   ///listView底部正在加载...
-  Widget listViewLoadingBottom(){
+  Widget listViewLoadingBottom() {
     return Container(
       padding: const EdgeInsets.all(16.0),
       alignment: Alignment.center,
@@ -65,24 +65,24 @@ class BaseFunction {
           SizedBox(
               width: 24.0,
               height: 24.0,
-              child: CircularProgressIndicator(strokeWidth: 2.0)
-          ),
+              child: CircularProgressIndicator(strokeWidth: 2.0)),
           Padding(
             padding: EdgeInsets.only(left: 20),
             child: Text("正在加载中..."),
           )
-
         ],
       ),
     );
   }
 
   ///listView底部没有数据
-  Widget listViewNoDataBottom(){
+  Widget listViewNoDataBottom() {
     return Container(
         alignment: Alignment.center,
         padding: EdgeInsets.all(16.0),
-        child: Text("没有更多了", style: TextStyle(color: Colors.grey),)
-    );
+        child: Text(
+          "没有更多了",
+          style: TextStyle(color: Colors.grey),
+        ));
   }
 }

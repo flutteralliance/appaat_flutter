@@ -1,12 +1,11 @@
+import 'package:appaat_flutter/common/api/net_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:appaat_flutter/api/net_utils.dart';
 import 'package:dio/dio.dart';
-import 'package:appaat_flutter/api/result_data.dart';
-import 'package:appaat_flutter/utils/flutter_screenutil.dart';
-import 'package:appaat_flutter/base/base_function.dart';
 import 'package:appaat_flutter/utils/route_util.dart';
-import 'package:toast/toast.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:appaat_flutter/common/api/api.dart';
+
+import 'base_function.dart';
 
 ///
 /// <pre>
@@ -41,7 +40,7 @@ abstract class BaseWidgetState<T extends BaseWidget> extends State<T>
   CancelToken cancelToken;
 
   ///获取请求链接 - 此处暴露方便子类调用
-  Api api = Api.getInstance();
+//  Api api = Api.getInstance();
 
   ///进度条是否显示
   bool isShowLoading = false;
@@ -131,10 +130,6 @@ abstract class BaseWidgetState<T extends BaseWidget> extends State<T>
      startActivityFinish(context,routePage);
   }
 
-  ///吐司
-  void showToast(String text){
-    Toast.show(text, context);
-  }
 
   ///获取页面名称 - 用于设置tag
   String getClassName() {
