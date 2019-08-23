@@ -1,6 +1,55 @@
 ### Dart 开发规范
 
-#### 命名规则
+#### 代码风格
++ 类、枚举、typedef和类型参数
+
+```Dart
+  class SliderMenu { ... }
+  
+  class HttpRequest { ... }
+  
+  typedef Predicate = bool Function<T>(T value);
+```
+
++ 使用小驼峰法命名其他标识符
+
+```Dart
+  var item;
+  
+  HttpRequest httpRequest;
+  
+  void align(bool clearItems) {
+    // ...
+  }
+```
+#### 导入的包排序
++ 为了使你的文件前言保持整洁，我们有规定的命令，指示应该出现在其中。每个“部分”应该用空行分隔。
+
+``` Dart
+  import 'package:flutter/material.dart';
+
+  /// index
+  //export 'package:appaat_flutter/res/index_res.dart';
+  export 'package:appaat_flutter/provide/index_provide.dart';
+  export 'package:appaat_flutter/router/index_router.dart';
+
+  /// app common
+  import '../app.dart';
+  export '../app.dart';
+
+  /// utils
+  import 'package:fluttertoast/fluttertoast.dart';
+  import 'package:flutter_screenutil/flutter_screenutil.dart';
+  import 'package:appaat_flutter/utils/dialog_utils.dart';
+```
+
++ 不推荐
+
+```Dart
+  import 'src/error.dart';
+  export 'src/error.dart';
+  import 'src/foo_bar.dart';
+```
 
 #### 注释
 ```Dart

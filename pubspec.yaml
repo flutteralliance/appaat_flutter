@@ -50,6 +50,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # json_serializable 使用自动生成 .g 文件
+  # 使用命令 flutter packages pub run build_runner build
+  # 或者使用 flutter packages pub run build_runner watch
+  # 具体参考 https://flutterchina.club/json/#code-generation
+  # Your other dev_dependencies here
+  build_runner: ^1.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

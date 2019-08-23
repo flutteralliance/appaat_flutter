@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:appaat_flutter/ui/login_page.dart';
 /// common
 import 'common/global_config.dart';
 import 'common/app.dart';
@@ -10,8 +9,9 @@ import 'common/app.dart';
 /// index
 import 'router/index_router.dart';
 import 'provide/index_provide.dart';
-
-import 'package:appaat_flutter/ui/test1.dart';
+/// page
+import 'ui/home_index_page.dart';
+import 'package:appaat_flutter/ui/login_page.dart';
 
 
 
@@ -21,9 +21,9 @@ void main() async {
 
   runZoned(() {
     /// 强制竖屏
-    SystemChrome.setPreferredOrientations(
-            [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp])
-        .then((_) {
+//    SystemChrome.setPreferredOrientations(
+//            [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp])
+//        .then((_) {
       runApp(MultiProvider(
         providers: getProviders(),
         child: MyApp(),
@@ -34,7 +34,7 @@ void main() async {
         // SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent);
         // SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
       }
-    });
+//    });
 
     PaintingBinding.instance.imageCache.maximumSize = 100;
   }, onError: (Object error, StackTrace stack) {
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(primaryColor: Colors.blueAccent),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: App.router.generator,
-      home: LoginPage(),
+      home: HomeIndexPage(),
     );
   }
 }
