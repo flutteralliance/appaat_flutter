@@ -17,11 +17,16 @@ class ResColors {
   static const Color text_normal = Color(0xFF666666);
   static const Color text_gray = Color(0xFF999999);
 
+  static const Color black_34 = Color(0xFF341b1c);
+
+  static const Color transparent_00 = Color(0x00000000);
+
   static const Color divider = Color(0xffe5e5e5);
 
   static const Color gray = Color(0xFFEEEEEE);
   static const Color gray_33 = Color(0xFF333333); //51
   static const Color gray_66 = Color(0xFF666666); //102
+  static const Color gray_7f = Color(0x26ffffff); //102
   static const Color gray_99 = Color(0xFF999999); //153
   static const Color common_orange = Color(0XFFFC9153); //252 145 83
   static const Color gray_ef = Color(0XFFEFEFEF); //153
@@ -33,6 +38,9 @@ class ResColors {
   static const Color green_1 = Color(0xff009688); //<!--204-->
   static const Color green_62 = Color(0xff626262); //<!--204-->
   static const Color green_e5 = Color(0xffe5e5e5); //<!--204-->
+
+  static const Color red_fe = Color(0xfffe6b55);
+  static const Color red_e2 = Color(0xffe2211c);
 
   static const Color hint_success = Color(0xffe5e5e5);
   static const Color hint_error = Color(0xffe5e5e5);

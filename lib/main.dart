@@ -11,6 +11,8 @@ import 'common/app.dart';
 import 'router/index_router.dart';
 import 'provide/index_provide.dart';
 
+import 'package:appaat_flutter/ui/test1.dart';
+
 
 
 void main() async {
