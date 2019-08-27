@@ -137,7 +137,7 @@ class LoginPageState extends BaseState<LoginPage> {
         Flexible(child: pwdInputView()),
         Padding(
           padding: EdgeInsets.only(top: h(120)),
-          child: GradientRedButton("登  录", width: 670, height: 88，onTap:onClickLogin),
+          child: GradientRedButton("登  录", width: 670, height: 88,onTap:onClickLogin),
         )
       ],
     );
