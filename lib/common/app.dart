@@ -2,7 +2,8 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 
 /// router
-import 'package:appaat_flutter/router/router_path.dart';
+import 'package:appaat_flutter/router/router_handler.dart';
+
 
 /// create by MZP 2019-08-12 20:27
 ///
@@ -17,10 +18,10 @@ class App {
   static Future navigateTo(BuildContext context, String path,
       {Map<String, String> params}) {
     if (params == null) {
-      return App.router.navigateTo(context, RoutersPath.getPath(path), transition: TransitionType.cupertino);
+      return App.router.navigateTo(context, getPath(path), transition: TransitionType.cupertino);
     } else {
       return App.router.navigateTo(
-          context, RoutersPath.getPath(path) + getNavigateToParams(params), transition: TransitionType.cupertino);
+          context, getPath(path) + getNavigateToParams(params), transition: TransitionType.cupertino);
     }
   }
 

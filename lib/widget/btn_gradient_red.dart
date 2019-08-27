@@ -54,17 +54,18 @@ class GradientRedButton extends StatelessWidget {
                 ]
               : [],
         ),
-        child: Container(
-          width: ScreenUtil.getInstance().setWidth(width),
-          height: ScreenUtil.getInstance().setHeight(height),
-          alignment: Alignment.center,
-          child: InkWell(
-            onTap: onTap,
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            width: ScreenUtil.getInstance().setWidth(width),
+            height: ScreenUtil.getInstance().setHeight(height),
+            alignment: Alignment.center,
             child: Text(
               _name,
               style: TextStyle(
-                  color: textColor,
-                  fontSize: ScreenUtil.getInstance().setSp(fontSize)),
+                color: textColor,
+                fontSize: ScreenUtil.getInstance().setSp(fontSize),
+              ),
             ),
           ),
         ));

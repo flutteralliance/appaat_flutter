@@ -105,4 +105,6 @@ flutter:
   assets:
   - images/
   - images/2.0x/
+  - images/2.0x/home/
   - images/3.0x/
+  - images/3.0x/home/

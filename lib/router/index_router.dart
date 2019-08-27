@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 /// page
 import 'package:appaat_flutter/widget/layout/error_page.dart';
 /// router
-import 'package:appaat_flutter/router/router_path.dart';
+//import 'package:appaat_flutter/router/router_path.dart';
+import 'router_handler.dart';
 
 /// create by MZP 2019-08-19 10:07
 ///
@@ -24,7 +25,7 @@ class Routers {
           return ErrorPage();
         });
     //
-    RoutersPath.initDefine(router);
+    initDefine(router);
   }
 
 }

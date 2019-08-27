@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+///
+import 'home_index_page.dart';
+
 /// common
 import 'package:appaat_flutter/common/base/base_widget.dart';
 
@@ -31,7 +34,6 @@ class LoginPage extends BaseStatefulWidget {
 }
 
 class LoginPageState extends BaseState<LoginPage> {
-
   TextEditingController _nameController = TextEditingController();
   TextEditingController _pwdController = TextEditingController();
   CancelToken _cancelToken = CancelToken();
@@ -64,7 +66,7 @@ class LoginPageState extends BaseState<LoginPage> {
   }
 
   ///校验是否登录
-  void checkLogin()async{
+  void checkLogin() async {
     var sp = await SpUtil.getInstance();
     bool isLogin = sp.getBool(SpUtil.IS_LOGIN);
     String modules = sp.getString(SpUtil.moduleCodeList);
@@ -80,12 +82,10 @@ class LoginPageState extends BaseState<LoginPage> {
     }
   }
 
-  void intoActivity(String modules, bool isAdmin) {
-
-  }
+  void intoActivity(String modules, bool isAdmin) {}
 
   ///登录
-  void onClickLogin(){
+  void onClickLogin() {
     String _name = _nameController.text;
     String _pwd = _pwdController.text;
 
@@ -101,22 +101,19 @@ class LoginPageState extends BaseState<LoginPage> {
       Fluttertoast.showToast(msg: "密码不能为空");
       return;
     }
-    loginNet(_pwd,_name);
+    loginNet(_pwd, _name);
   }
 
   ///登录请求
-  void loginNet(String pwd, String name)async{
+  void loginNet(String pwd, String name) async {
     String md5Pwd = Md5Util.generateMd5(pwd);
-    var request = {"data":{
-      "name":name,
-      "password":md5Pwd,
-      "actionType":"tool"
-    }};
-    ResultData result = await NetUtils.post(Api.LOGIN_URL,request , _cancelToken);
+    var request = {
+      "data": {"name": name, "password": md5Pwd, "actionType": "tool"}
+    };
+    ResultData result =
+        await NetUtils.post(Api.LOGIN_URL, request, _cancelToken);
     print(result);
-    if(result.result) {
-
-    }
+    if (result.result) {}
   }
 
   ///登录页面
@@ -124,7 +121,11 @@ class LoginPageState extends BaseState<LoginPage> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Flexible(child: Divider(height: h(240),color: ResColors.transparent_00,)),
+        Flexible(
+            child: Divider(
+          height: h(240),
+          color: ResColors.transparent_00,
+        )),
         Flexible(
           child: Image(
             image: AssetImage("images/2.0x/ic_launcher.png"),
@@ -137,7 +138,9 @@ class LoginPageState extends BaseState<LoginPage> {
         Flexible(child: pwdInputView()),
         Padding(
           padding: EdgeInsets.only(top: h(120)),
-          child: GradientRedButton("登  录", width: 670, height: 88,onTap:onClickLogin),
+          child: GradientRedButton("登  录", width: 670, height: 88, onTap: () {
+            navigateTo(context, '$HomeIndexPage');
+          }),
         )
       ],
     );

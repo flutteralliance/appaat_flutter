@@ -39,7 +39,6 @@ class HomePageState extends BaseState<HomeIndexPage> {
 
   @override
   Widget build(BuildContext context) {
-    GlobalConfig.init(context);
     return new Scaffold(
       body: Column(
         children: <Widget>[
@@ -71,7 +70,7 @@ class HomePageState extends BaseState<HomeIndexPage> {
   @override
   void initState() {
     super.initState();
-    currentPage = pageList[0];
+    currentPage = pageList[currentIndex];
   }
 
   @override

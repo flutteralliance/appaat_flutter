@@ -110,16 +110,22 @@ class WorkbenchCenterWidget extends BaseStatelessWidget {
 class WorkbenchBottomWidget extends BaseStatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('版本号: 1.4.1'),
-        GradientRedButton(
-          '退出',
-          width: 462,
-          height: 88,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 3),
+            child: Text('版本号: 1.4.2'),
+          ),
+          GradientRedButton(
+            '退出',
+            width: 462,
+            height: 88,
+          ),
+        ],
+      ),
     );
   }
 }
