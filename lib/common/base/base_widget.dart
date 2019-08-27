@@ -43,6 +43,15 @@ class Base {
 
   ///----------------------------------------------------
 
+  ///
+  assetImage(String namePath) => AssetImage("images/$namePath.png");
+
+  assetImageXX(String namePath) => AssetImage("images/2.0x/$namePath.png");
+
+  assetImageXXX(String namePath) => AssetImage("images/3.0x/$namePath.png");
+
+  ///
+
   ///screen ----------------------------------------------------
 
   h(double height) => ScreenUtil.instance.setHeight(height);
@@ -68,6 +77,10 @@ class Base {
   double get safeContentH =>
       screenDpH - ScreenUtil.statusBarHeight - ScreenUtil.bottomBarHeight;
 
+  double get statusBarHeight => ScreenUtil.statusBarHeight;
+
+  double get bottomBarHeight => ScreenUtil.bottomBarHeight;
+
   /// 实际安全区域的dp高度
   double get safeH =>
       safeContentH - kToolbarHeight - kBottomNavigationBarHeight;
@@ -87,10 +100,12 @@ class Base {
   void show(String msg) => Fluttertoast.showToast(msg: msg);
 
   printLog(Object o) {
-    print("");
-    print("=========================================================START");
-    print(o);
-    print("=========================================================END");
+    debugPrint("debugPrint");
+    debugPrint(
+        "debugPrint: =========================================================> START");
+    debugPrint(o);
+    debugPrint(
+        "debugPrint: =========================================================> END");
   }
 }
 

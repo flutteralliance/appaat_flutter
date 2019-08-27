@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 /// create by MZP 2019-08-15 11:56
-/// 
-/// 
+///
+///
 ///
 ///
 
 class ResColors {
-  static const Color app_main = Color(0xFF007BFA);
-  static const Color app_main_dark = Color(0xFF007BFA);
+  static const Color app_main = Color(0xFFe2211c);
+  static const Color app_main_dark = Color(0xFFe2211c);
   static const Color app_accent_primary = Color(0xFFF50057);
 
   static const Color transparent_80 = Color(0x80000000); //<!--204-->
@@ -22,6 +22,7 @@ class ResColors {
   static const Color transparent_00 = Color(0x00000000);
 
   static const Color divider = Color(0xffe5e5e5);
+  static const Color white = Colors.white;
 
   static const Color gray = Color(0xFFEEEEEE);
   static const Color gray_33 = Color(0xFF333333); //51
@@ -42,7 +43,9 @@ class ResColors {
   static const Color red_fe = Color(0xfffe6b55);
   static const Color red_e2 = Color(0xffe2211c);
 
-  static const Color hint_success = Color(0xffe5e5e5);
-  static const Color hint_error = Color(0xffe5e5e5);
-  static const Color error_rad = Color(0xffe5e5e5);
+  static const Color hint_green = Color(0xff09BB07);
+  static const Color hint_blue_link = Color(0xff576b95);
+  static const Color hint_blue_prompt = Color(0xff007BFA);
+  static const Color hint_rad_error = Color(0xffe64340);
+  static const Color hint_brown = Color(0xff8B7765);
 }

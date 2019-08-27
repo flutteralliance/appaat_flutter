@@ -18,16 +18,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///
 ///
 
+const double screenWidth = 750;
+const double screenHeight = 1334;
+
 class GlobalConfig {
   static void init(BuildContext context, {Router router}) {
     initBaseUrl();
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
+    ScreenUtil.instance = ScreenUtil(width: screenWidth, height: screenHeight)..init(context);
     App.context = context;
   }
 
   static void initBaseUrl() {
-    NetUtils.init(new HttpOptionsModel(
-        "http://v.jspang.com:8088/baixing/",
+    NetUtils.init(new HttpOptionsModel("http://v.jspang.com:8088/baixing/",
         connectTimeout: TimeUtils.minutes,
         receiveTimeout: TimeUtils.minutes,
         headers: {

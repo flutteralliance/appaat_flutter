@@ -45,6 +45,8 @@ dependencies:
   fluttertoast: ^3.1.0
   # 页面路由
   fluro: ^1.5.1
+  # 闪屏
+  shimmer: ^1.0.0
 
 dev_dependencies:
   flutter_test:
@@ -101,4 +103,6 @@ flutter:
   assets:
   - images/
   - images/2.0x/
+  - images/2.0x/home/
   - images/3.0x/
+  - images/3.0x/home/

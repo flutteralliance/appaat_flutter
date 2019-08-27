@@ -3,7 +3,7 @@ export 'package:fluro/fluro.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 /// page
-import 'package:appaat_flutter/res/layout/error_page.dart';
+import 'package:appaat_flutter/widget/layout/error_page.dart';
 /// router
 import 'package:appaat_flutter/router/router_path.dart';
 

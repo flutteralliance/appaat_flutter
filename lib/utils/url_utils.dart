@@ -9,11 +9,11 @@ class UrlUtils {
   /// 打开系统电话页面
   static void tel(String phone) async {
     var url = "tel:" + phone;
-    if (await canLaunch(url)) {
+//    if (await canLaunch(url)) {
       await launch(url);
-    } else {
-      print("error");
-    }
+//    } else {
+//      print("error");
+//    }
   }
 
   static void http(String path) async {
@@ -24,20 +24,20 @@ class UrlUtils {
       url = "http:" + path;
     }
 
-    if (await canLaunch(url)) {
+//    if (await canLaunch(url)) {
       await launch(url);
-    } else {
-      print("error");
-    }
+//    } else {
+//      print("error");
+//    }
   }
 
   static void sms(String message) async {
     var url = "sms:" + message;
-    if (await canLaunch(url)) {
+//    if (await canLaunch(url)) {
       await launch(url);
-    } else {
-      print("error");
-    }
+//    } else {
+//      print("error");
+//    }
   }
 //  Scheme	Action
 //  http:<URL> , https:<URL>, e.g. http://flutter.dev	Open URL in the default browser
