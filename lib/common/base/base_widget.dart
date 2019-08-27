@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 //export 'package:appaat_flutter/res/index_res.dart';
 export 'package:appaat_flutter/provide/index_provide.dart';
 export 'package:appaat_flutter/router/index_router.dart';
+///网络请求
+export 'package:appaat_flutter/common/api/net_utils.dart';
+export 'package:appaat_flutter/common/api/api.dart';
+export 'package:appaat_flutter/common/api/result_data.dart';
 
 /// app common
 import '../app.dart';
@@ -16,6 +20,7 @@ import 'package:appaat_flutter/utils/dialog_utils.dart';
 
 ///
 class Base {
+
   showHint(BuildContext context, String content) {
     DialogUtils.showHint(context, content);
   }

@@ -65,11 +65,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
 
     return MaterialApp(
-      title: "Flutter Demo",
+      title: "优爆助手",
       theme: ThemeData(primaryColor: Colors.blueAccent),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: App.router.generator,
-      home: HomeIndexPage(),
+      home: LoginPage(),
     );
   }
 }

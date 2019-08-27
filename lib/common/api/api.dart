@@ -9,6 +9,6 @@
 ///
 class Api {
   static const String BASE_URL = 'http://dev.dingdian.xin/ddaigo-platform/';
-  static const String getStockOrderNum = 'stockIn/getStockOrderNum';
-  String items = 'store/stockcount/result/items';
+  ///登录
+  static const String LOGIN_URL = '/ddaigo-platform/user/loginv3';
 }

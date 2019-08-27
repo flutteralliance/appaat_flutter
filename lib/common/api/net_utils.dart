@@ -41,7 +41,7 @@ class NetUtils {
     return response.data;
   }
 
-  static post(
+  static Future<ResultData> post(
       String url, Map<String, dynamic> params, CancelToken cancelToken) async {
     print(
         "\n--------------------------------------------请求start--------------------------------------------\n\n");
