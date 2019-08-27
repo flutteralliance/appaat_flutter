@@ -11,6 +11,7 @@ import 'package:appaat_flutter/utils/shared_preferences.dart';
 /// </pre>
 ///
 class Constants {
+
   String storeNo;
   int storeType = 0; //1-加盟店；2-合作店；3-会员店
   int memberLevel = 0;
