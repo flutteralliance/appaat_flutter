@@ -81,7 +81,7 @@ abstract class BaseWidgetState<T extends BaseWidget> extends State<T>
       child: Stack(
         children: <Widget>[
           buildWidget(context),
-          loadingWidget(isShowLoading,screenUtil),
+          loadingViewWidget(isShowLoading,screenUtil),
         ],
       ),
     );

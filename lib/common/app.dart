@@ -20,6 +20,7 @@ class App {
     if (params == null) {
       return App.router.navigateTo(context, getPath(path), transition: TransitionType.cupertino);
     } else {
+      print("navigateTo:${getPath(path) + getNavigateToParams(params)}");
       return App.router.navigateTo(
           context, getPath(path) + getNavigateToParams(params), transition: TransitionType.cupertino);
     }

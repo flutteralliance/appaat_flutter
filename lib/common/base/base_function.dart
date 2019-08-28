@@ -12,7 +12,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 ///
 class BaseFunction {
   ///加载进度框Widget
-  Widget loadingWidget(bool isShowLoading, ScreenUtil screenUtil) {
+  Widget loadingViewWidget(bool isShowLoading, ScreenUtil screenUtil) {
     return Visibility(
       visible: isShowLoading,
       child: Container(

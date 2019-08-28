@@ -1,4 +1,7 @@
+import 'package:appaat_flutter/common/base/base_function.dart';
+import 'package:appaat_flutter/widget/view_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 ///
 import 'home_index_page.dart';
@@ -18,25 +21,55 @@ import 'package:appaat_flutter/utils/constants.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:appaat_flutter/utils/md5_util.dart';
 import 'package:dio/dio.dart';
+import 'package:appaat_flutter/entry/login_entity.dart';
+import 'package:appaat_flutter/entry/store_entity.dart';
+import 'package:appaat_flutter/utils/route_util.dart';
+
 
 ///
 /// <pre>
 ///     author : Wp
 ///     e-mail : 1101313414@qq.com
 ///     time   : 2019/8/20 2:38 PM
-///     desc   : 登录页面
+///     desc   : 登录页面 CloudPushService未绑定
 ///     version: 1.0
 /// </pre>
 ///
+// ignore: must_be_immutable
 class LoginPage extends BaseStatefulWidget {
+  String id;
+  String jumpType;
+
   @override
-  State<StatefulWidget> createState() => LoginPageState();
+  State<StatefulWidget> createState() => LoginPageState(id, jumpType);
+
+  LoginPage(this.id, this.jumpType);
 }
 
-class LoginPageState extends BaseState<LoginPage> {
+class LoginPageState extends BaseState<LoginPage> with BaseFunction{
   TextEditingController _nameController = TextEditingController();
   TextEditingController _pwdController = TextEditingController();
   CancelToken _cancelToken = CancelToken();
+  ///分享进入或者推送进入判断
+  String id;
+  String jumpType;
+  ///进度条是否显示
+  bool isShowLoading = false;
+  ///更新页面状态
+  State state;
+  ///页面是否存活
+  bool isLiveActivity = false;
+  BuildContext _context;
+
+  LoginPageState(this.id, this.jumpType);
+
+  @override
+  void initState() {
+    isLiveActivity = true;
+    state = this;
+    super.initState();
+    checkLogin();
+  }
 
   @override
   void dispose() {
@@ -47,28 +80,34 @@ class LoginPageState extends BaseState<LoginPage> {
   @override
   Widget build(BuildContext context) {
     GlobalConfig.init(context);
+    _context = context;
 
     return Material(
-      child: Scaffold(
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("images/splash_bg.png"),
-              fit: BoxFit.cover,
+      child: Stack(
+        children: <Widget>[
+          Scaffold(
+            body: Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("images/splash_bg.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              child: loginBody(),
             ),
           ),
-          child: loginBody(),
-        ),
+          loadingViewWidget(isShowLoading,ScreenUtil.getInstance())
+        ],
       ),
     );
   }
 
   ///校验是否登录
-  void checkLogin() async {
+  checkLogin() async {
     var sp = await SpUtil.getInstance();
-    bool isLogin = sp.getBool(SpUtil.IS_LOGIN);
+    bool isLogin = null!=sp.getBool(SpUtil.IS_LOGIN)?sp.getBool(SpUtil.IS_LOGIN):false;
     String modules = sp.getString(SpUtil.moduleCodeList);
     bool isAdmin = sp.getBool(SpUtil.isAdmin);
     //全局赋值
@@ -82,10 +121,47 @@ class LoginPageState extends BaseState<LoginPage> {
     }
   }
 
-  void intoActivity(String modules, bool isAdmin) {}
+  ///跳转页面判断
+  intoActivity(String modules, bool isAdmin) {
+    getStoreInfoNet();
+    var params = {"jumpType": jumpType, "id": id};
+    startActivityFinish(context, HomeIndexPage());
+//    if (null != jumpType && "" != jumpType && "INDEX" != jumpType) {
+//      navigateTo(context, '$HomeIndexPage', params: params);
+//    } else {
+//      if (isAdmin) {
+//        //管理员
+//        navigateTo(context, 'BossHomeChartAct', params: params);
+//      } else {
+//        if (modules.contains(",")) {
+//          if (modules.contains("/toolIndex,")) {
+//            //老板看板
+//            navigateTo(context, 'BossHomeChartAct', params: params);
+//          } //店员看板
+//          else if (modules.contains("/toolIndex/dianzhangshouye")) {
+//            navigateTo(context, 'HomeChartAct', params: params);
+//          } //店员权限 - 工作台
+//          else {
+//            navigateTo(context, '$HomeIndexPage', params: params);
+//          }
+//        } else {
+//          if (modules.contains("/toolIndex")) {
+//            //老板看板
+//            navigateTo(context, 'BossHomeChartAct', params: params);
+//          } //店员看板
+//          else if (modules.contains("/toolIndex/dianzhangshouye")) {
+//            navigateTo(context, 'HomeChartAct', params: params);
+//          } //店员权限 - 工作台
+//          else {
+//            navigateTo(context, '$HomeIndexPage', params: params);
+//          }
+//        }
+//      }
+//    }
+  }
 
-  ///登录
-  void onClickLogin() {
+  ///登录校验
+  onClickLogin() {
     String _name = _nameController.text;
     String _pwd = _pwdController.text;
 
@@ -105,15 +181,76 @@ class LoginPageState extends BaseState<LoginPage> {
   }
 
   ///登录请求
-  void loginNet(String pwd, String name) async {
+  loginNet(String pwd, String name) async {
+    showLoading();
     String md5Pwd = Md5Util.generateMd5(pwd);
     var request = {
       "data": {"name": name, "password": md5Pwd, "actionType": "tool"}
     };
     ResultData result =
         await NetUtils.post(Api.LOGIN_URL, request, _cancelToken);
-    print(result);
-    if (result.result) {}
+    if (result.result) {
+      //登录成功
+      LoginEntity loginEntity = LoginEntity.fromJson(result.data);
+      saveLoginInfoToLocal(loginEntity, name);
+      intoActivity(loginEntity.moduleCodeList.toString(), loginEntity.isAdmin);
+    } else {
+      //登录失败
+      show("登录失败,请稍候重试");
+    }
+    hideLoading();
+  }
+
+  ///获取门店信息
+  getStoreInfoNet() async {
+    String storeNo = await Constants.getInstance().getStoreNo();
+    var request = {"data":{"storeNo": storeNo}};
+    if(null!=storeNo) {
+      ResultData result =
+      await NetUtils.post(Api.getStoreByNo, request, _cancelToken);
+      if (result.result) {
+        SpUtil spUtil = await SpUtil.getInstance();
+        StoreEntity storeEntity = StoreEntity.fromJson(result.data);
+        spUtil.save(SpUtil.storeType, storeEntity.storeType);
+        Constants.getInstance().setStoreType(storeEntity.storeType);
+      }
+    }
+  }
+
+  ///用户信息保存本地
+  saveLoginInfoToLocal(LoginEntity data, String name) async {
+    SpUtil spUtil = await SpUtil.getInstance();
+    //保存sessionId到本地
+    spUtil.save(SpUtil.SESSION_ID, data.sessionId);
+    spUtil.save(SpUtil.NICK_NAME, data.nickName);
+    spUtil.save(SpUtil.VERIFY_PHONE, name);
+    spUtil.save(SpUtil.PASS_WORD, data.password);
+    //用户Id
+    spUtil.save(SpUtil.userId, data.userId);
+    Constants.getInstance().setUserId(data.userId);
+    spUtil.save(SpUtil.IS_LOGIN, true);
+    //保存门店 编号
+    spUtil.save(SpUtil.STORE_NO, data.storeNo);
+    Constants.getInstance().setStoreNo(data.storeNo);
+    Constants.getInstance().setStoreName(data.storeName);
+    //保存名称
+    spUtil.save(SpUtil.STORE_NAME, data.storeName);
+    spUtil.save(SpUtil.RoleId, data.roleId);
+    //权限字段
+    spUtil.save(SpUtil.roleName, data.roleName);
+    Constants.getInstance().setRoleName(data.roleName);
+    //权限字段
+    spUtil.save(SpUtil.roleDesc, data.roleDesc);
+    Constants.getInstance().setRoleDesc(data.roleDesc);
+    spUtil.save(SpUtil.RoleStatus, data.roleStatus);
+    //模块权限
+    spUtil.save(SpUtil.moduleCodeList, data.moduleCodeList.toString());
+    //门店列表
+    String storeJson = '{"storeList":${data.storeList}';
+    spUtil.save(SpUtil.storeList, storeJson);
+    //是否管理员
+    spUtil.save(SpUtil.isAdmin, data.isAdmin);
+    Constants.isAdmin = data.isAdmin;
   }
 
   ///登录页面
@@ -139,7 +276,7 @@ class LoginPageState extends BaseState<LoginPage> {
         Padding(
           padding: EdgeInsets.only(top: h(120)),
           child: GradientRedButton("登  录", width: 670, height: 88, onTap: () {
-            navigateTo(context, '$HomeIndexPage');
+            onClickLogin();
           }),
         )
       ],
@@ -200,4 +337,23 @@ class LoginPageState extends BaseState<LoginPage> {
       ),
     );
   }
+
+  ///显示加载提示框
+  showLoading({bool isLoadingClose = false}) {
+    if (null != state && isLiveActivity) {
+      state.setState(() {
+        isShowLoading = true;
+      });
+    }
+  }
+
+  ///隐藏加载提示框
+  hideLoading() {
+    if (null != state && isLiveActivity) {
+      state.setState(() {
+        isShowLoading = false;
+      });
+    }
+  }
+
 }

@@ -2,10 +2,8 @@ import 'dart:async';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 /// 用来做shared_preferences的存储
 class SpUtil {
-
   ///键值
   static final String IS_LOGIN = "is_login";
   static final String NICK_NAME = "nickName";
@@ -43,7 +41,6 @@ class SpUtil {
 
   static SharedPreferences _spf;
 
-
   SpUtil._();
 
   Future _init() async {
@@ -63,6 +60,23 @@ class SpUtil {
       return true;
     }
     return false;
+  }
+
+  ///统一保存入口
+  Future<bool> save(String key, var value) {
+    if (value is bool) {
+      return putBool(key, value);
+    } else if (value is double) {
+      return putDouble(key, value);
+    } else if (value is int) {
+      return putInt(key, value);
+    } else if (value is String) {
+      return putString(key, value);
+    } else if (value is List<String>) {
+      return putStringList(key, value);
+    }else {
+      return null;
+    }
   }
 
   // 判断是否存在数据
@@ -134,7 +148,6 @@ class SpUtil {
     if (_beforeCheck()) return null;
     return _spf.get(key);
   }
-
 
   Future<bool> remove(String key) {
     if (_beforeCheck()) return null;

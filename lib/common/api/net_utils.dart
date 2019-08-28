@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:appaat_flutter/common/api/result_data.dart';
 import 'package:dio/dio.dart';
 /// common api
@@ -76,9 +77,9 @@ class NetUtils {
     // 过滤器
     CommonResult result = new CommonResult.fromJson(response.data);
     if (result.code == '200') {
-      return new ResultData(response.data, true, int.parse(result.code));
+      return new ResultData(result.data, true, int.parse(result.code));
     } else {
-      return new ResultData(response.data, false, int.parse(result.code));
+      return new ResultData(result.data, false, int.parse(result.code));
     }
   }
 

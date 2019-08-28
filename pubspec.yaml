@@ -45,7 +45,7 @@ dependencies:
   fluttertoast: ^3.1.0
   # 页面路由
   fluro: ^1.5.1
-  # 页面路由
+  # md5
   crypto: ^2.0.6
   # 闪屏
   shimmer: ^1.0.0

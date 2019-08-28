@@ -8,7 +8,9 @@
 /// </pre>
 ///
 class Api {
-  static const String BASE_URL = 'http://dev.dingdian.xin/ddaigo-platform/';
+  static const String BASE_URL = 'http://dev.dingdian.xin/';
   ///登录
   static const String LOGIN_URL = '/ddaigo-platform/user/loginv3';
+  ///获取门店信息
+  static const String getStoreByNo = '/ddaigo-platform/store/getStoreByNo';
 }

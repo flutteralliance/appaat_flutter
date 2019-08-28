@@ -56,25 +56,27 @@ class Constants {
     roleName = roleName;
   }
 
-//  Future<String> getRoleDesc() {
-//    if (null != roleDesc && !"".equals(roleDesc))
-//      return roleDesc;
-//    else
-//      return SpUtils.getInstace(ToolsApplication.getContext())
-//          .getString(SpUtils.roleDesc, "");
-//  }
+  Future<String> getRoleDesc()async {
+    if (null != roleDesc && ""!=roleDesc)
+      return roleDesc;
+    else {
+      SpUtil sp = await SpUtil.getInstance();
+      return sp.getString(SpUtil.roleDesc);
+    }
+  }
 
   void setRoleDesc(String roleDesc) {
     this.roleDesc = roleDesc;
   }
 
-//  Future<int> getUserId() {
-//    if (10086 != userId)
-//      return userId;
-//    else
-//      return SpUtils.getInstace(ToolsApplication.getContext())
-//          .getInt(SpUtils.userId, 10086);
-//  }
+  Future<int> getUserId() async{
+    if (10086 != userId)
+      return userId;
+    else{
+      SpUtil sp = await SpUtil.getInstance();
+      return sp.getInt(SpUtil.userId);
+    }
+  }
 
   void setUserId(int userId) {
     this.userId = userId;
@@ -93,21 +95,25 @@ class Constants {
     this.storeNo = storeNo;
   }
 
-//  Future<int> getStoreType() {
-//    if (0 == storeType) {
-//      return SpUtils.getInstace(ToolsApplication.getContext())
-//          .getInt(SpUtils.storeType, 0);
-//    }
-//    return storeType;
-//  }
+  Future<int> getStoreType() async{
+    if (0 == storeType) {
+      SpUtil sp = await SpUtil.getInstance();
+      return sp.getInt(SpUtil.storeType);
+    }
+    return storeType;
+  }
 
   void setStoreType(int storeType) {
     this.storeType = storeType;
   }
 
-//  Future<int> getMemberLevel() {
-//    return memberLevel;
-//  }
+  Future<int> getMemberLevel() async{
+    if (0 == memberLevel) {
+      SpUtil sp = await SpUtil.getInstance();
+      return sp.getInt(SpUtil.memberLevel);
+    }
+    return memberLevel;
+  }
 
   void setMemberLevel(int memberLevel) {
     this.memberLevel = memberLevel;

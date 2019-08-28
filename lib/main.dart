@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(primaryColor: Colors.blueAccent),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: App.router.generator,
-      home: LoginPage(),
+      home: LoginPage("",""),
     );
   }
 }

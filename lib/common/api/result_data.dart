@@ -10,10 +10,10 @@
 ///
 ///
 class ResultData {
-  var data;
+  dynamic data;
   bool result;
   int code;
-  var headers;
+  dynamic headers;
 
   ResultData(this.data, this.result, this.code, {this.headers});
 }
