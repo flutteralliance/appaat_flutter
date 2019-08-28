@@ -10,6 +10,9 @@ import 'package:appaat_flutter/common/base/base_widget.dart';
 /// widget
 import 'package:appaat_flutter/widget/btn_gradient_red.dart';
 
+///
+import 'package:appaat_flutter/utils/platform_utils.dart';
+
 /// create by MZP 2019-08-23 15:13
 ///
 /// 首页-工作台-widget
@@ -117,7 +120,16 @@ class WorkbenchBottomWidget extends BaseStatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(bottom: 3),
-            child: Text('版本号: 1.4.2'),
+            child: FutureBuilder(
+              future: PlatformUtils.getAppVersion(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Text('版本号: ${snapshot.data.toString()}');
+                } else {
+                  return Text('');
+                }
+              },
+            ),
           ),
           GradientRedButton(
             '退出',

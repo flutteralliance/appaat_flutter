@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// index
-//export 'package:appaat_flutter/res/index_res.dart';
+export 'package:appaat_flutter/res/index_res.dart';
 export 'package:appaat_flutter/provide/index_provide.dart';
 export 'package:appaat_flutter/router/index_router.dart';
 ///网络请求

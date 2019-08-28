@@ -130,7 +130,7 @@ class HomePageState extends BaseState<HomeIndexPage> {
       padding: EdgeInsets.all(1),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(44),
       ),
       child: Row(
         children: <Widget>[
