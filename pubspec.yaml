@@ -49,6 +49,11 @@ dependencies:
   crypto: ^2.0.6
   # 闪屏
   shimmer: ^1.0.0
+  device_info: ^0.4.0+1
+  package_info: ^0.4.0+3
+  # 统计图表
+  charts_flutter: ^0.7.0
+
 
 dev_dependencies:
   flutter_test:
