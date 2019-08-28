@@ -25,7 +25,6 @@ import 'package:appaat_flutter/entry/login_entity.dart';
 import 'package:appaat_flutter/entry/store_entity.dart';
 import 'package:appaat_flutter/utils/route_util.dart';
 
-
 ///
 /// <pre>
 ///     author : Wp
@@ -46,20 +45,26 @@ class LoginPage extends BaseStatefulWidget {
   LoginPage(this.id, this.jumpType);
 }
 
-class LoginPageState extends BaseState<LoginPage> with BaseFunction{
+class LoginPageState extends BaseState<LoginPage> with BaseFunction {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _pwdController = TextEditingController();
   CancelToken _cancelToken = CancelToken();
+
   ///分享进入或者推送进入判断
   String id;
   String jumpType;
+
   ///进度条是否显示
   bool isShowLoading = false;
+
   ///更新页面状态
   State state;
+
   ///页面是否存活
   bool isLiveActivity = false;
-  BuildContext _context;
+
+  ///页面宽高
+  double pageW = 0, pageH = 0;
 
   LoginPageState(this.id, this.jumpType);
 
@@ -80,15 +85,13 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction{
   @override
   Widget build(BuildContext context) {
     GlobalConfig.init(context);
-    _context = context;
-
     return Material(
       child: Stack(
         children: <Widget>[
           Scaffold(
             body: Container(
-              width: double.infinity,
-              height: double.infinity,
+              width: pageW,
+              height: pageH,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("images/splash_bg.png"),
@@ -98,7 +101,7 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction{
               child: loginBody(),
             ),
           ),
-          loadingViewWidget(isShowLoading,ScreenUtil.getInstance())
+          loadingViewWidget(isShowLoading, ScreenUtil.getInstance())
         ],
       ),
     );
@@ -107,7 +110,10 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction{
   ///校验是否登录
   checkLogin() async {
     var sp = await SpUtil.getInstance();
-    bool isLogin = null!=sp.getBool(SpUtil.IS_LOGIN)?sp.getBool(SpUtil.IS_LOGIN):false;
+    bool isLogin = null != sp.getBool(SpUtil.IS_LOGIN)
+        ? sp.getBool(SpUtil.IS_LOGIN)
+        : false;
+    print("isLogin:$isLogin");
     String modules = sp.getString(SpUtil.moduleCodeList);
     bool isAdmin = sp.getBool(SpUtil.isAdmin);
     //全局赋值
@@ -118,6 +124,11 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction{
     Constants.getInstance().setRoleDesc(sp.getString(SpUtil.roleDesc));
     if (isLogin) {
       intoActivity(modules, isAdmin);
+    }else{
+      setState(() {
+        pageH = double.infinity;
+        pageW = double.infinity;
+      });
     }
   }
 
@@ -204,10 +215,12 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction{
   ///获取门店信息
   getStoreInfoNet() async {
     String storeNo = await Constants.getInstance().getStoreNo();
-    var request = {"data":{"storeNo": storeNo}};
-    if(null!=storeNo) {
+    var request = {
+      "data": {"storeNo": storeNo}
+    };
+    if (null != storeNo && ""!=storeNo) {
       ResultData result =
-      await NetUtils.post(Api.getStoreByNo, request, _cancelToken);
+          await NetUtils.post(Api.getStoreByNo, request, _cancelToken);
       if (result.result) {
         SpUtil spUtil = await SpUtil.getInstance();
         StoreEntity storeEntity = StoreEntity.fromJson(result.data);
@@ -295,7 +308,7 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction{
       child: Padding(
         padding: const EdgeInsets.only(left: 29),
         child: TextField(
-          autofocus: true,
+          autofocus: false,
           decoration: InputDecoration(
               border: InputBorder.none,
               hintText: "请输入手机号码",
@@ -323,7 +336,7 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction{
       child: Padding(
         padding: const EdgeInsets.only(left: 29),
         child: TextField(
-            autofocus: true,
+            autofocus: false,
             decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: "请输入登陆密码",
@@ -355,5 +368,4 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction{
       });
     }
   }
-
 }
