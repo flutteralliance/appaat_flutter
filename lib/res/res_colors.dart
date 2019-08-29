@@ -25,6 +25,7 @@ class ResColors {
   static const Color white = Colors.white;
 
   static const Color gray = Color(0xFFEEEEEE);
+  static const Color gray_f1 = Color(0xFFf1f2f7);
   static const Color gray_33 = Color(0xFF333333); //51
   static const Color gray_66 = Color(0xFF666666); //102
   static const Color gray_7f = Color(0x26ffffff); //102

@@ -69,7 +69,7 @@ class NetUtils {
       return new ResultData(
           Code.errorHandleFunction(errorResponse.statusCode, e.message),
           false,
-          errorResponse.statusCode);
+          errorResponse.statusCode,0);
     }
     print("请求结果：$response\n");
     print(
@@ -77,9 +77,9 @@ class NetUtils {
     // 过滤器
     CommonResult result = new CommonResult.fromJson(response.data);
     if (result.code == '200') {
-      return new ResultData(result.data, true, int.parse(result.code));
+      return new ResultData(result.data, true, int.parse(result.code),result.total);
     } else {
-      return new ResultData(result.data, false, int.parse(result.code));
+      return new ResultData(result.data, false, int.parse(result.code),result.total);
     }
   }
 

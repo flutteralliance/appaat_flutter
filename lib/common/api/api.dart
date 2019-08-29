@@ -12,5 +12,7 @@ class Api {
   ///登录
   static const String LOGIN_URL = '/ddaigo-platform/user/loginv3';
   ///获取门店信息
-  static const String getStoreByNo = '/ddaigo-platform/store/getStoreByNo';
+  static const String getStoreByNo = '/ddaigo-platform/store/getStoreByNo';  
+  ///顾客退货列表
+  static const String orders = '/ddaigo-platform/store/returned/orders';
 }

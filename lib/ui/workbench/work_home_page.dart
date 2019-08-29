@@ -21,11 +21,11 @@ class HomeWorkbenchPage extends BaseStatelessWidget {
   Widget build(BuildContext context) {
     initData();
     return Scaffold(
-      backgroundColor: ResColors.gray,
+      backgroundColor: ResColors.gray_f1,
       body: Column(
         children: <Widget>[
           WorkbenchTopWidget(),
-          WorkbenchCenterWidget(itemList),
+          WorkbenchCenterWidget(itemList,context),
           WorkbenchBottomWidget(),
         ],
       ),

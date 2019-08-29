@@ -53,7 +53,9 @@ dependencies:
   package_info: ^0.4.0+3
   # 统计图表
   charts_flutter: ^0.7.0
-
+  # json 格式化参考如下
+  # https://caijinglong.github.io/json2dart/index.html
+  json_serializable: ^3.2.1
 
 dev_dependencies:
   flutter_test:

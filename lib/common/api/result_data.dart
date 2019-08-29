@@ -13,7 +13,8 @@ class ResultData {
   dynamic data;
   bool result;
   int code;
+  dynamic total;
   dynamic headers;
 
-  ResultData(this.data, this.result, this.code, {this.headers});
+  ResultData(this.data, this.result, this.code, this.total, {this.headers});
 }

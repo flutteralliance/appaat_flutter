@@ -1,3 +1,4 @@
+import 'package:appaat_flutter/ui/refund/customer_refund_list_page.dart';
 import 'package:flutter/material.dart';
 
 ///
@@ -14,6 +15,7 @@ import 'package:appaat_flutter/ui/home_index_page.dart';
 
 void initDefine(Router router) {
   router.define(getPath("$HomeIndexPage"), handler: homePageHandler);
+  router.define(getPath("$CustomerRefundListPage"), handler: refundPageHandler);
 }
 
 String getPath(String path) => "${Routers.root}$path";
@@ -25,6 +27,14 @@ var homePageHandler = Handler(
 
   return HomeIndexPage();
 });
+
+
+/// 顾客退货
+var refundPageHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+//  String goodsId = params["goodsId"].first;
+      return CustomerRefundListPage();
+    });
 
 /// 商品详情
 //var goodsDetailsHandler =

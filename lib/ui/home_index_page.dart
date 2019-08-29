@@ -29,6 +29,7 @@ class HomePageState extends BaseState<HomeIndexPage> {
   var currentPage;
   int currentIndex = 1;
   String titleText = "工作台";
+  DateTime _lastPressedAt; // 上次点击时间
   final List<Widget> pageList = [HomePage(), HomeWorkbenchPage()];
 
 //  final List<BottomNavigationBarItem> pageNavItemList = [
@@ -39,20 +40,23 @@ class HomePageState extends BaseState<HomeIndexPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      body: Column(
-        children: <Widget>[
-          createTitleBar(),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: bottomBarHeight),
-              child: IndexedStack(
-                index: currentIndex,
-                children: pageList,
+    return WillPopScope(
+      onWillPop: _onBackPressed,
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            createTitleBar(),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: bottomBarHeight),
+                child: IndexedStack(
+                  index: currentIndex,
+                  children: pageList,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
 //      bottomNavigationBar: BottomNavigationBar(
@@ -163,5 +167,18 @@ class HomePageState extends BaseState<HomeIndexPage> {
         ],
       ),
     );
+  }
+
+  /// 监听返回键，点击两下退出程序
+  Future<bool> _onBackPressed() async {
+    if (_lastPressedAt == null ||
+        DateTime.now().difference(_lastPressedAt) > Duration(seconds: 2)) {
+      print("点击时间");
+      //两次点击间隔超过2秒则重新计时
+      _lastPressedAt = DateTime.now();
+      show("再按一次退出");
+      return false;
+    }
+    return true;
   }
 }

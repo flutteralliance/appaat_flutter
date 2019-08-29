@@ -1,3 +1,4 @@
+import 'package:appaat_flutter/ui/refund/customer_refund_list_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -50,19 +51,16 @@ class WorkbenchTopWidget extends BaseStatelessWidget {
 /// 内容
 class WorkbenchCenterWidget extends BaseStatelessWidget {
   final List<ItemBean> itemList;
+  final BuildContext _context;
 
-  WorkbenchCenterWidget(this.itemList);
+  WorkbenchCenterWidget(this.itemList, this._context);
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Card(
-        margin: EdgeInsets.all(10),
-        // 圆角
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-
+      child: Container(
+        color: Colors.white,
+        margin: EdgeInsets.symmetric(vertical: 10),
         child: GridView.count(
           padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
           // 创建几列
@@ -93,19 +91,33 @@ class WorkbenchCenterWidget extends BaseStatelessWidget {
   }
 
   Widget _item(ItemBean it) {
-    return Column(
-      children: <Widget>[
-        Image(
-          width: w(112),
-          height: w(112),
-          image: assetImageXX(it.img),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Text(it.name),
-        ),
-      ],
+    return InkWell(
+      onTap: () {
+        onClickItem(it, _context);
+      },
+      child: Column(
+        children: <Widget>[
+          Image(
+            width: w(112),
+            height: w(112),
+            image: assetImageXX(it.img),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 10),
+            child: Text(it.name),
+          ),
+        ],
+      ),
     );
+  }
+
+  ///跳转
+  onClickItem(ItemBean it, BuildContext context) {
+    switch (it.name) {
+      case "顾客退货":
+        navigateTo(context, "$CustomerRefundListPage");
+        break;
+    }
   }
 }
 
@@ -124,7 +136,8 @@ class WorkbenchBottomWidget extends BaseStatelessWidget {
               future: PlatformUtils.getAppVersion(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return Text('版本号: ${snapshot.data.toString()}');
+                  return Text('版本号: ${snapshot.data.toString()}',
+                      style: TextStyle(fontSize: sp(22)));
                 } else {
                   return Text('');
                 }
@@ -132,8 +145,8 @@ class WorkbenchBottomWidget extends BaseStatelessWidget {
             ),
           ),
           GradientRedButton(
-            '退出',
-            width: 462,
+            '退  出',
+            width: 682,
             height: 88,
           ),
         ],

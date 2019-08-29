@@ -10,4 +10,6 @@ class TimeUtils {
   static const int minutes_3 = minutes * 3; // 3 分钟
   static const int minutes_5 = minutes * 5; // 5 分钟
   static const int minutes_10 = minutes * 10; // 10 分钟
+
 }
+
