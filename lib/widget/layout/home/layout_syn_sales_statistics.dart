@@ -111,6 +111,7 @@ class SalesTableWidget extends BaseStatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView(
+        padding: EdgeInsets.all(0),
         children: <Widget>[
           _tableWidget(),
           Text(
@@ -139,7 +140,7 @@ class SalesTableWidget extends BaseStatelessWidget {
             Container(
               width: screenDpW - 70,
               height: height,
-              child: _tableTitleLab(listData),
+              child: _tableRightScroll(listData),
             ),
           ],
         );
@@ -148,14 +149,9 @@ class SalesTableWidget extends BaseStatelessWidget {
   }
 
   ListView _tableLeftLab(List<StoreSales> list) {
-//    var typeList = [];
-//    typeList.addAll(list);
-//
-//    var leftTitle = list[0];
-//    leftTitle.storeName = '店铺';
-//    typeList.insert(0, leftTitle);
-
     return ListView.builder(
+      padding: EdgeInsets.all(0),
+      physics: NeverScrollableScrollPhysics(),
       itemCount: list.length + 1,
       itemBuilder: (BuildContext context, int index) {
         bool isTitle = index == 0;
@@ -164,8 +160,8 @@ class SalesTableWidget extends BaseStatelessWidget {
           padding: EdgeInsets.only(left: 4, right: 4),
           color: isTitle ? ResColors.app_main : ResColors.yellow_light,
           height: 50,
-          child: Text(isTitle ? '店铺' :
-            '${list[index - 1].storeName}',
+          child: Text(
+            isTitle ? '店铺' : '${list[index - 1].storeName}',
             textAlign: TextAlign.center,
             style: TextStyle(
                 color: isTitle ? ResColors.white : ResColors.text_dark),
@@ -175,36 +171,60 @@ class SalesTableWidget extends BaseStatelessWidget {
     );
   }
 
-  ListView _tableTitleLab(List<StoreSales> list) {
-    return ListView.builder(
+  Widget _tableRightScroll(List<StoreSales> list) {
+    return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      itemCount: 8,
-      itemBuilder: (BuildContext context, int index) {
-        bool isRed = index == 1;
-        bool isGreen = index == 2;
+      child: Container(
+        width: tableTitle.length * 90.0,
+        color: Colors.white,
+        child: ListView.builder(
+          padding: EdgeInsets.all(0),
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: list.length + 1,
+          itemBuilder: (BuildContext context, int index) {
+            bool isRed = index == 1;
+            bool isGreen = index == 2;
 
-        List<SalesTableModel> itemList = [];
-        itemList.add(SalesTableModel(true, Colors.white, tableTitle[index]));
+            List<SalesTableModel> itemList = [];
+//            itemList
+//                .add(SalesTableModel(true, Colors.white, tableTitle[index]));
+            Color textColor = ResColors.text_dark;
 
-        Color textColor = ResColors.text_dark;
-        if (isRed) {
-          textColor = ResColors.app_main;
-        } else if (isGreen) {
-          textColor = ResColors.hint_green;
-        }
-        list.map((it) {
-          itemList.add(SalesTableModel(false, textColor, '$it.salesAmount'));
-        });
-
-        return _createItems(itemList);
-      },
+            if (isRed) {
+              textColor = ResColors.app_main;
+            } else if (isGreen) {
+              textColor = ResColors.hint_green;
+            }
+            bool isTitle = index == 0;
+            if (isTitle) {
+              for (int i = 0; i < tableTitle.length; i++) {
+                var it = tableTitle[i];
+                itemList.add(
+                    SalesTableModel(isTitle, textColor, '$it'));
+              }
+            } else {
+              var it = list[index - 1];
+              itemList.add(SalesTableModel(isTitle, textColor, '${it.buyAmount}'));
+              itemList.add(SalesTableModel(isTitle, textColor, '${it.momRiseRate}'));
+              itemList.add(SalesTableModel(isTitle, textColor, '${it.salesAmount}'));
+              itemList.add(SalesTableModel(isTitle, textColor, '${it.goodsQuantity}'));
+              itemList.add(SalesTableModel(isTitle, textColor, '${it.orderQuantity}'));
+              itemList.add(SalesTableModel(isTitle, textColor, '${it.grossProfitRate}'));
+              itemList.add(SalesTableModel(isTitle, textColor, '${it.momSalesAmount}'));
+              itemList.add(SalesTableModel(isTitle, textColor, '${it.perCustomerSales}'));
+//              itemList.add(SalesTableModel(isTitle, textColor, '${it.jointRate}'));
+            }
+            return _createItems(itemList);
+          },
+        ),
+      ),
     );
   }
 
   /// ["销售额","环比销售额","环比增长率","商品销量","订单数","客单价","连带率","毛利率"]
   /// 创建一列数据
   Widget _createItems(List<SalesTableModel> list) {
-    return Column(
+    return Row(
       children: list.map((it) {
         return _item(it);
       }).toList(),
@@ -214,7 +234,6 @@ class SalesTableWidget extends BaseStatelessWidget {
   /// item
   Widget _item(SalesTableModel it) {
     bool isTitle = it.isTitle;
-
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.only(left: 4, right: 4),
@@ -224,8 +243,7 @@ class SalesTableWidget extends BaseStatelessWidget {
       child: Text(
         '${it.textContent}',
         textAlign: TextAlign.center,
-        style:
-            TextStyle(color: isTitle ? ResColors.white : it.textColor),
+        style: TextStyle(color: isTitle ? ResColors.white : it.textColor),
       ),
     );
   }
