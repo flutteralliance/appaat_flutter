@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 
 /// provide
 import 'home_provide.dart';
+import 'home/synthetical_provider.dart';
 
 ///
 
@@ -14,6 +15,7 @@ import 'home_provide.dart';
 List<SingleChildCloneableWidget> getProviders() {
   return [
     ChangeNotifierProvider(builder: (_) => HomePageCarProvide(0)),
+    ChangeNotifierProvider(builder: (_) => HomeSyntheticalProvider()),
 //    ChangeNotifierProvider(builder: (_) => HomePageCategoryProvide([])),
 //    ChangeNotifierProvider(builder: (_) => GoodsDetailProvide()),
   ];

@@ -17,6 +17,7 @@ export '../app.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:appaat_flutter/utils/dialog_utils.dart';
+import 'package:appaat_flutter/utils/log_util.dart';
 
 ///
 class Base {
@@ -105,12 +106,11 @@ class Base {
   void show(String msg) => Fluttertoast.showToast(msg: msg);
 
   printLog(Object o) {
-    debugPrint("debugPrint");
     debugPrint(
-        "debugPrint: =========================================================> START");
-    debugPrint(o);
+        "=============================START============================= LOG =>");
+    LogUtil.v(o);
     debugPrint(
-        "debugPrint: =========================================================> END");
+        "==============================END============================== LOG =>");
   }
 }
 

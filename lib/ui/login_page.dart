@@ -173,8 +173,10 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction {
 
   ///登录校验
   onClickLogin() {
-    String _name = _nameController.text;
-    String _pwd = _pwdController.text;
+//    String _name = _nameController.text;
+//    String _pwd = _pwdController.text;
+    String _name = '18141924293';
+    String _pwd = '123456';
 
     if (_name.toString().isEmpty) {
       Fluttertoast.showToast(msg: "手机号码不能为空");
@@ -289,6 +291,7 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction {
         Padding(
           padding: EdgeInsets.only(top: h(120)),
           child: GradientRedButton("登  录", width: 670, height: 88, onTap: () {
+//            navigateTo(context, '$HomeIndexPage');
             onClickLogin();
           }),
         )
@@ -310,6 +313,7 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction {
         child: TextField(
           autofocus: false,
           decoration: InputDecoration(
+              labelText: '18141924293',
               border: InputBorder.none,
               hintText: "请输入手机号码",
               hintStyle:
@@ -338,6 +342,7 @@ class LoginPageState extends BaseState<LoginPage> with BaseFunction {
         child: TextField(
             autofocus: false,
             decoration: InputDecoration(
+                labelText: '123456',
                 border: InputBorder.none,
                 hintText: "请输入登陆密码",
                 hintStyle:

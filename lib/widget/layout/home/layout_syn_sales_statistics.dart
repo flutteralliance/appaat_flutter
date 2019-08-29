@@ -1,12 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:appaat_flutter/common/base/base_widget.dart';
 import 'package:flutter/rendering.dart';
 
-/// Example of a numeric combo chart with two series rendered as bars, and a
-/// third rendered as a line.
+///
+import 'package:appaat_flutter/common/base/base_widget.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/widgets.dart';
+
+/// page
+import 'package:appaat_flutter/ui/home/home_custom_time.dart';
+
+/// entry
+import 'package:appaat_flutter/entry/home_syn_sales_statistics.dart';
+
+/// provide
+import 'package:appaat_flutter/provide/home/synthetical_provider.dart';
 
 /// create by MZP 2019-08-28 15:20
 ///
@@ -31,60 +39,204 @@ class SalesTimeWidget extends BaseStatelessWidget {
         children: <Widget>[
           Positioned(
             left: 0,
-            child: Image(
-              width: w(80),
-              height: h(80),
-              image: assetImageXX('home/logo_rad'),
-            ),
+            child: _createLeft(),
           ),
           Positioned(
             left: w(80) + 10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  '选中时间:',
-                  style: TextStyle(fontSize: ResSize.text_content),
-                ),
-                Text(
-                  '环比时间:',
-                  style: TextStyle(
-                    color: ResColors.app_main,
-                  ),
-                ),
-              ],
-            ),
+            child: _createContent(),
           ),
           Positioned(
             right: 0,
-            child: Image(
-              width: w(80),
-              height: h(80),
-              image: assetImageXX('home/btn_time_check'),
-            ),
+            child: _createRight(),
           ),
         ],
       ),
+    );
+  }
+
+  Column _createContent() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          '选中时间:',
+          style: TextStyle(fontSize: ResSize.text_content),
+        ),
+        Text(
+          '环比时间:',
+          style: TextStyle(
+            color: ResColors.app_main,
+          ),
+        ),
+      ],
+    );
+  }
+
+  InkWell _createRight() {
+    return InkWell(
+      onTap: () {
+        HomeCustomTime.start();
+      },
+      child: Image(
+        width: w(80),
+        height: h(80),
+        image: assetImageXX('home/btn_time_check'),
+      ),
+    );
+  }
+
+  Image _createLeft() {
+    return Image(
+      width: w(80),
+      height: h(80),
+      image: assetImageXX('home/logo_rad'),
     );
   }
 }
 
 /// 数据表格
 class SalesTableWidget extends BaseStatelessWidget {
+  var tableTitle = [
+    "销售额",
+    "环比销售额",
+    "环比增长率",
+    "商品销量",
+    "订单数",
+    "客单价",
+    "连带率",
+    "毛利率"
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: Container(
-      color: ResColors.white,
-      child: Row(children: <Widget>[
-        Column(
-          children: <Widget>[
-            Text('店铺'),
-          ],
-        )
-      ]),
-    ));
+      child: ListView(
+        children: <Widget>[
+          _tableWidget(),
+          Text(
+            '*点击门店名称查看该店日期范围内销售明细',
+            style: TextStyle(
+                fontSize: ResSize.text_content_hint_12,
+                color: ResColors.app_main),
+          ),
+        ],
+      ),
+    );
   }
+
+  Widget _tableWidget() {
+    return Consumer<HomeSyntheticalProvider>(
+      builder: (context, p, child) {
+        List<StoreSales> listData = p.salesStatistics.storeSalesList;
+        double height = (listData.length + 1) * 50.0;
+        return Row(
+          children: <Widget>[
+            Container(
+              width: 70,
+              height: height,
+              child: _tableLeftLab(listData),
+            ),
+            Container(
+              width: screenDpW - 70,
+              height: height,
+              child: _tableTitleLab(listData),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  ListView _tableLeftLab(List<StoreSales> list) {
+//    var typeList = [];
+//    typeList.addAll(list);
+//
+//    var leftTitle = list[0];
+//    leftTitle.storeName = '店铺';
+//    typeList.insert(0, leftTitle);
+
+    return ListView.builder(
+      itemCount: list.length + 1,
+      itemBuilder: (BuildContext context, int index) {
+        bool isTitle = index == 0;
+        return Container(
+          alignment: Alignment.center,
+          padding: EdgeInsets.only(left: 4, right: 4),
+          color: isTitle ? ResColors.app_main : ResColors.yellow_light,
+          height: 50,
+          child: Text(isTitle ? '店铺' :
+            '${list[index - 1].storeName}',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: isTitle ? ResColors.white : ResColors.text_dark),
+          ),
+        );
+      },
+    );
+  }
+
+  ListView _tableTitleLab(List<StoreSales> list) {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: 8,
+      itemBuilder: (BuildContext context, int index) {
+        bool isRed = index == 1;
+        bool isGreen = index == 2;
+
+        List<SalesTableModel> itemList = [];
+        itemList.add(SalesTableModel(true, Colors.white, tableTitle[index]));
+
+        Color textColor = ResColors.text_dark;
+        if (isRed) {
+          textColor = ResColors.app_main;
+        } else if (isGreen) {
+          textColor = ResColors.hint_green;
+        }
+        list.map((it) {
+          itemList.add(SalesTableModel(false, textColor, '$it.salesAmount'));
+        });
+
+        return _createItems(itemList);
+      },
+    );
+  }
+
+  /// ["销售额","环比销售额","环比增长率","商品销量","订单数","客单价","连带率","毛利率"]
+  /// 创建一列数据
+  Widget _createItems(List<SalesTableModel> list) {
+    return Column(
+      children: list.map((it) {
+        return _item(it);
+      }).toList(),
+    );
+  }
+
+  /// item
+  Widget _item(SalesTableModel it) {
+    bool isTitle = it.isTitle;
+
+    return Container(
+      alignment: Alignment.center,
+      padding: EdgeInsets.only(left: 4, right: 4),
+      color: isTitle ? ResColors.app_main : ResColors.white,
+      height: 50,
+      width: 90,
+      child: Text(
+        '${it.textContent}',
+        textAlign: TextAlign.center,
+        style:
+            TextStyle(color: isTitle ? ResColors.white : it.textColor),
+      ),
+    );
+  }
+}
+
+class SalesTableModel {
+  bool isTitle = false;
+  Color textColor;
+  String textContent = '-';
+
+  SalesTableModel(this.isTitle, this.textColor, this.textContent);
 }
 
 /// 统计分析
@@ -127,25 +279,24 @@ class SalesStatisticsWidget extends BaseStatelessWidget {
 
   /// Create one series with sample hard coded data.
   static List<charts.Series<LinearSales, String>> _createSampleData() {
-
     final tableSalesData = [
       new LinearSales('比如世界', 123),
       new LinearSales('叮当测试分店1', 567),
       new LinearSales('中央仓', 8888),
-      new LinearSales('易县1店', 1175),
-      new LinearSales('易县1店', 1175),
-      new LinearSales('易县1店', 1175),
-      new LinearSales('易县1店', 1175),
+      new LinearSales('易县1店', 1000),
+      new LinearSales('易县2店', 2000),
+      new LinearSales('易县3店', 3000),
+      new LinearSales('易县4店', 4000),
     ];
 
     final mobileSalesData = [
       new LinearSales('比如世界', 200),
       new LinearSales('叮当测试分店1', 200),
       new LinearSales('中央仓', 1000),
-      new LinearSales('易县1店', 3000),
-      new LinearSales('易县1店', 3000),
-      new LinearSales('易县1店', 3000),
-      new LinearSales('易县1店', 3000),
+      new LinearSales('易县1店', 1000),
+      new LinearSales('易县2店', 2000),
+      new LinearSales('易县3店', 3000),
+      new LinearSales('易县4店', 4000),
     ];
 
     return [

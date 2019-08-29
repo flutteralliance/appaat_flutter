@@ -11,5 +11,7 @@ class ResSize {
 
   /// 不指定text 的大小, 系统默认是 14 sp
   static const double text_default = 14;
+
   static const double text_content_hint = 13;
+  static const double text_content_hint_12 = 12;
 }
