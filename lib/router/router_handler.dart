@@ -23,28 +23,27 @@ void initDefine(Router router) {
 String getPath(String path) => "${Routers.root}$path";
 
 /// 首页
-var homePageHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+var homePageHandler =
+    Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
 //  String goodsId = params["goodsId"].first;
 
   return HomeIndexPage();
 });
 
 /// 首页-自定义时间
-var homeCustomTimeHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+var homeCustomTimeHandler =
+    Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
 //  String goodsId = params["goodsId"].first;
 
-      return HomeCustomTime();
-    });
-
+  return HomeCustomTime();
+});
 
 /// 顾客退货
-var refundPageHandler = Handler(
-    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+var refundPageHandler =
+    Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
 //  String goodsId = params["goodsId"].first;
-      return CustomerRefundListPage();
-    });
+  return CustomerRefundListPage();
+});
 
 /// 商品详情
 //var goodsDetailsHandler =

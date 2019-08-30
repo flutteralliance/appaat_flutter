@@ -26,30 +26,35 @@ import 'package:appaat_flutter/provide/home/synthetical_provider.dart';
 class SalesTimeWidget extends BaseStatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: h(140),
-      margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Positioned(
-            left: 0,
-            child: _createLeft(),
-          ),
-          Positioned(
-            left: w(80) + 10,
-            child: _createContent(),
-          ),
-          Positioned(
-            right: 0,
-            child: _createRight(),
-          ),
-        ],
+    return InkWell(
+      onTap: () {
+        HomeCustomTime.start(context);
+      },
+      child: Container(
+        height: h(140),
+        margin: EdgeInsets.fromLTRB(10, 5, 10, 5),
+        padding: EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            Positioned(
+              left: 0,
+              child: _createLeft(),
+            ),
+            Positioned(
+              left: w(80) + 10,
+              child: _createContent(),
+            ),
+            Positioned(
+              right: 0,
+              child: _createRight(),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -72,16 +77,11 @@ class SalesTimeWidget extends BaseStatelessWidget {
     );
   }
 
-  InkWell _createRight() {
-    return InkWell(
-      onTap: () {
-        HomeCustomTime.start();
-      },
-      child: Image(
-        width: w(80),
-        height: h(80),
-        image: assetImageXX('home/btn_time_check'),
-      ),
+  Widget _createRight() {
+    return Image(
+      width: w(80),
+      height: h(80),
+      image: assetImageXX('home/btn_time_check'),
     );
   }
 
@@ -96,16 +96,8 @@ class SalesTimeWidget extends BaseStatelessWidget {
 
 /// 数据表格
 class SalesTableWidget extends BaseStatelessWidget {
-  var tableTitle = [
-    "销售额",
-    "环比销售额",
-    "环比增长率",
-    "商品销量",
-    "订单数",
-    "客单价",
-    "连带率",
-    "毛利率"
-  ];
+  var tableTitle = ["销售额", "环比销售额", "环比增长率", "商品销量", "订单数", "客单价", "连带率", "毛利率"];
+  var itemWidth = 80.0;
 
   @override
   Widget build(BuildContext context) {
@@ -114,12 +106,17 @@ class SalesTableWidget extends BaseStatelessWidget {
         padding: EdgeInsets.all(0),
         children: <Widget>[
           _tableWidget(),
-          Text(
-            '*点击门店名称查看该店日期范围内销售明细',
-            style: TextStyle(
-                fontSize: ResSize.text_content_hint_12,
-                color: ResColors.app_main),
+          Container(
+            color: Colors.white,
+            alignment: Alignment.centerLeft,
+            height: 30,
+            padding: EdgeInsets.only(left: 10),
+            child: Text(
+              '*点击门店名称查看该店日期范围内销售明细',
+              style: TextStyle(fontSize: ResSize.text_content_hint_12, color: ResColors.app_main),
+            ),
           ),
+          SalesStatisticsWidget(),
         ],
       ),
     );
@@ -158,12 +155,20 @@ class SalesTableWidget extends BaseStatelessWidget {
         return Container(
           alignment: Alignment.center,
           padding: EdgeInsets.only(left: 4, right: 4),
-          color: isTitle ? ResColors.app_main : ResColors.yellow_light,
+//          color: isTitle ? ResColors.app_main : ResColors.yellow_light,
           height: 50,
+          decoration: BoxDecoration(
+            color: isTitle ? ResColors.app_main : ResColors.yellow_light,
+            border: Border(
+              right: BorderSide(width: 0.5, color: ResColors.gray),
+              bottom: BorderSide(width: 0.5, color: ResColors.gray),
+            ),
+          ),
           child: Text(
             isTitle ? '店铺' : '${list[index - 1].storeName}',
             textAlign: TextAlign.center,
             style: TextStyle(
+                fontSize: ResSize.text_content_hint,
                 color: isTitle ? ResColors.white : ResColors.text_dark),
           ),
         );
@@ -175,46 +180,14 @@ class SalesTableWidget extends BaseStatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Container(
-        width: tableTitle.length * 90.0,
+        width: tableTitle.length * itemWidth,
         color: Colors.white,
         child: ListView.builder(
           padding: EdgeInsets.all(0),
           physics: NeverScrollableScrollPhysics(),
           itemCount: list.length + 1,
           itemBuilder: (BuildContext context, int index) {
-            bool isRed = index == 1;
-            bool isGreen = index == 2;
-
-            List<SalesTableModel> itemList = [];
-//            itemList
-//                .add(SalesTableModel(true, Colors.white, tableTitle[index]));
-            Color textColor = ResColors.text_dark;
-
-            if (isRed) {
-              textColor = ResColors.app_main;
-            } else if (isGreen) {
-              textColor = ResColors.hint_green;
-            }
-            bool isTitle = index == 0;
-            if (isTitle) {
-              for (int i = 0; i < tableTitle.length; i++) {
-                var it = tableTitle[i];
-                itemList.add(
-                    SalesTableModel(isTitle, textColor, '$it'));
-              }
-            } else {
-              var it = list[index - 1];
-              itemList.add(SalesTableModel(isTitle, textColor, '${it.buyAmount}'));
-              itemList.add(SalesTableModel(isTitle, textColor, '${it.momRiseRate}'));
-              itemList.add(SalesTableModel(isTitle, textColor, '${it.salesAmount}'));
-              itemList.add(SalesTableModel(isTitle, textColor, '${it.goodsQuantity}'));
-              itemList.add(SalesTableModel(isTitle, textColor, '${it.orderQuantity}'));
-              itemList.add(SalesTableModel(isTitle, textColor, '${it.grossProfitRate}'));
-              itemList.add(SalesTableModel(isTitle, textColor, '${it.momSalesAmount}'));
-              itemList.add(SalesTableModel(isTitle, textColor, '${it.perCustomerSales}'));
-//              itemList.add(SalesTableModel(isTitle, textColor, '${it.jointRate}'));
-            }
-            return _createItems(itemList);
+            return _createItems(getItemData(index, list));
           },
         ),
       ),
@@ -237,15 +210,46 @@ class SalesTableWidget extends BaseStatelessWidget {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.only(left: 4, right: 4),
-      color: isTitle ? ResColors.app_main : ResColors.white,
+//      color: isTitle ? ResColors.app_main : ResColors.white,
       height: 50,
-      width: 90,
+      width: itemWidth,
+      decoration: BoxDecoration(
+        color: isTitle ? ResColors.app_main : ResColors.white,
+        border: Border(
+          right: BorderSide(width: 0.5, color: ResColors.gray),
+          bottom: BorderSide(width: 0.5, color: ResColors.gray),
+        ),
+      ),
       child: Text(
         '${it.textContent}',
         textAlign: TextAlign.center,
-        style: TextStyle(color: isTitle ? ResColors.white : it.textColor),
+        style: TextStyle(
+            fontSize: ResSize.text_content_hint, color: isTitle ? ResColors.white : it.textColor),
       ),
     );
+  }
+
+  List<SalesTableModel> getItemData(int index, List<StoreSales> list) {
+    List<SalesTableModel> itemList = [];
+    Color textColor = ResColors.text_dark;
+    bool isTitle = index == 0;
+    if (isTitle) {
+      for (int i = 0; i < tableTitle.length; i++) {
+        var it = tableTitle[i];
+        itemList.add(SalesTableModel(isTitle, textColor, '$it'));
+      }
+    } else {
+      var it = list[index - 1];
+      itemList.add(SalesTableModel(isTitle, textColor, '${it.salesAmount}'));
+      itemList.add(SalesTableModel(isTitle, ResColors.app_main, '${it.momSalesAmount}'));
+      itemList.add(SalesTableModel(isTitle, ResColors.hint_green, '${it.momRiseRate}'));
+      itemList.add(SalesTableModel(isTitle, textColor, '${it.goodsQuantity}'));
+      itemList.add(SalesTableModel(isTitle, textColor, '${it.orderQuantity}'));
+      itemList.add(SalesTableModel(isTitle, textColor, '${it.perCustomerSales}'));
+      itemList.add(SalesTableModel(isTitle, textColor, '${it.jointRate}'));
+      itemList.add(SalesTableModel(isTitle, textColor, '${it.grossProfitRate}'));
+    }
+    return itemList;
   }
 }
 
@@ -258,9 +262,10 @@ class SalesTableModel {
 }
 
 /// 统计分析
+// ignore: must_be_immutable
 class SalesStatisticsWidget extends BaseStatelessWidget {
-  final List<charts.Series> seriesList = _createSampleData();
-  final bool animate = true;
+  List<charts.Series> seriesList;
+  final bool animate = false;
 
 //  SalesStatisticsWidget(this.seriesList, {this.animate});
 
@@ -275,64 +280,50 @@ class SalesStatisticsWidget extends BaseStatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      color: Colors.white,
-      padding: EdgeInsets.all(8),
-      margin: EdgeInsets.only(top: 10),
-      child: charts.OrdinalComboChart(seriesList,
-          animate: animate,
-          // Configure the default renderer as a line renderer. This will be used
-          // for any series that does not define a rendererIdKey.
-          defaultRenderer: new charts.LineRendererConfig(),
-          // Custom renderer configuration for the bar series.
-          customSeriesRenderers: [
-            new charts.BarRendererConfig(
-                cornerStrategy: const charts.ConstCornerStrategy(30),
-                // ID used to link series to this renderer.
-                customRendererId: 'customBar')
-          ]),
-    );
+    return Consumer<HomeSyntheticalProvider>(builder: (context, p, child) {
+      seriesList = _createData(p.salesStatistics.storeSalesList);
+      return Container(
+        height: 200,
+        color: Colors.white,
+        padding: EdgeInsets.all(8),
+        margin: EdgeInsets.only(top: 10),
+        child: charts.OrdinalComboChart(seriesList,
+            animate: animate,
+            // Configure the default renderer as a line renderer. This will be used
+            // for any series that does not define a rendererIdKey.
+            defaultRenderer: new charts.LineRendererConfig(),
+            // Custom renderer configuration for the bar series.
+            customSeriesRenderers: [
+              new charts.BarRendererConfig(
+                  cornerStrategy: const charts.ConstCornerStrategy(30),
+                  // ID used to link series to this renderer.
+                  customRendererId: 'customBar')
+            ]),
+      );
+    });
   }
 
-  /// Create one series with sample hard coded data.
-  static List<charts.Series<LinearSales, String>> _createSampleData() {
-    final tableSalesData = [
-      new LinearSales('比如世界', 123),
-      new LinearSales('叮当测试分店1', 567),
-      new LinearSales('中央仓', 8888),
-      new LinearSales('易县1店', 1000),
-      new LinearSales('易县2店', 2000),
-      new LinearSales('易县3店', 3000),
-      new LinearSales('易县4店', 4000),
-    ];
+  List<charts.Series<LinearSales, String>> _createData(List<StoreSales> list) {
+    /// 柱状
+    List<LinearSales> barSalesData = [];
 
-    final mobileSalesData = [
-      new LinearSales('比如世界', 200),
-      new LinearSales('叮当测试分店1', 200),
-      new LinearSales('中央仓', 1000),
-      new LinearSales('易县1店', 1000),
-      new LinearSales('易县2店', 2000),
-      new LinearSales('易县3店', 3000),
-      new LinearSales('易县4店', 4000),
-    ];
+    /// 折线
+    List<LinearSales> listSalesData = [];
+
+    list.forEach((it) {
+      if (it.storeNo.isNotEmpty) {
+        barSalesData.add(LinearSales('${it.storeName}', it.salesAmount.toInt()));
+        listSalesData.add(LinearSales('${it.storeName}', getGrossProfitRate(it.grossProfitRate)));
+      }
+    });
 
     return [
-//      new charts.Series<LinearSales, int>(
-//        id: 'Desktop',
-//        colorFn: (_, __) => charts.MaterialPalette.blue.shadeDefault,
-//        domainFn: (LinearSales sales, _) => sales.year,
-//        measureFn: (LinearSales sales, _) => sales.sales,
-//        data: desktopSalesData,
-//      )
-//        // Configure our custom bar renderer for this series.
-//        ..setAttribute(charts.rendererIdKey, 'customBar'),
       new charts.Series<LinearSales, String>(
         id: 'Tablet',
         colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
         domainFn: (LinearSales sales, _) => sales.labName,
         measureFn: (LinearSales sales, _) => sales.sales,
-        data: tableSalesData,
+        data: barSalesData,
       )
         // Configure our custom bar renderer for this series.
         ..setAttribute(charts.rendererIdKey, 'customBar'),
@@ -341,8 +332,16 @@ class SalesStatisticsWidget extends BaseStatelessWidget {
           colorFn: (_, __) => charts.MaterialPalette.green.shadeDefault,
           domainFn: (LinearSales sales, _) => sales.labName,
           measureFn: (LinearSales sales, _) => sales.sales,
-          data: mobileSalesData),
+          data: listSalesData),
     ];
+  }
+
+  int getGrossProfitRate(String num) {
+    if (num.isEmpty || num == '-') {
+      return 0;
+    } else {
+      return int.parse(num.replaceAll('%', ''));
+    }
   }
 }
 

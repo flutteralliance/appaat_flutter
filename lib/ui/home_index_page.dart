@@ -40,6 +40,8 @@ class HomePageState extends BaseState<HomeIndexPage> {
 
   @override
   Widget build(BuildContext context) {
+    /// logon 初始化的 context 被销毁, 所以在homo 重新赋值
+    App.context = context;
     return WillPopScope(
       onWillPop: _onBackPressed,
       child: Scaffold(

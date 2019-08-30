@@ -52,6 +52,7 @@ class ResColors {
 
 
   static const Color yellow_light = Color(0xffFFE162);
+  static const Color gray_light = Color(0xfff4f5f9);
 
 
 

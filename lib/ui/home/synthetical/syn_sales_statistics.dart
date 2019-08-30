@@ -32,7 +32,7 @@ class SynSalesStatistics extends BaseStatelessWidget {
           children: <Widget>[
             SalesTimeWidget(),
             SalesTableWidget(),
-//          SalesStatisticsWidget(),
+//            SalesStatisticsWidget(),
           ],
         );
       },
