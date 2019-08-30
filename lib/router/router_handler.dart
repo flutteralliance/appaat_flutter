@@ -6,7 +6,6 @@ import 'index_router.dart';
 
 /// page
 import 'package:appaat_flutter/ui/home_index_page.dart';
-import 'package:appaat_flutter/ui/home/home_custom_time.dart';
 
 /// create by MZP 2019-08-19 10:09
 ///
@@ -17,40 +16,36 @@ import 'package:appaat_flutter/ui/home/home_custom_time.dart';
 void initDefine(Router router) {
   router.define(getPath("$HomeIndexPage"), handler: homePageHandler);
   router.define(getPath("$CustomerRefundListPage"), handler: refundPageHandler);
+  router.define(getPath("$CustomerRefundDetailPage"), handler: refundDetailPageHandler);
   router.define(getPath("$HomeCustomTime"), handler: homeCustomTimeHandler);
 }
 
 String getPath(String path) => "${Routers.root}$path";
 
 /// 首页
-var homePageHandler =
-    Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-//  String goodsId = params["goodsId"].first;
-
+var homePageHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return HomeIndexPage();
 });
 
 /// 首页-自定义时间
-var homeCustomTimeHandler =
-    Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-//  String goodsId = params["goodsId"].first;
+var homeCustomTimeHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+      return HomeCustomTime();
+    });
 
-  return HomeCustomTime();
-});
 
 /// 顾客退货
-var refundPageHandler =
-    Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-//  String goodsId = params["goodsId"].first;
+var refundPageHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
   return CustomerRefundListPage();
 });
 
-/// 商品详情
-//var goodsDetailsHandler =
-//    Handler(handlerFunc: (BuildContext context, Map<String, List<String>> params) {
-//  String goodsId = params["goodsId"].first;
-//
-//  return GoodsDetail(goodsId);
-//});
+/// 顾客退货详情
+var refundDetailPageHandler = Handler(
+    handlerFunc: (BuildContext context, Map<String, List<String>> params) {
+  String returnOrderId = params["returnOrderId"].first;
+  return CustomerRefundDetailPage(returnOrderId);
+});
 
-///
+
