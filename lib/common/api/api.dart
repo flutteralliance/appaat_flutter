@@ -15,7 +15,8 @@ class Api {
   static const String getStoreByNo = '/ddaigo-platform/store/getStoreByNo';
   ///顾客退货列表
   static const String orders = '/ddaigo-platform/store/returned/orders';
-
+  ///获取退货单信息
+  static const String order = '/ddaigo-platform/store/returned/order';
   ///获取门店信息
   static const String get_home_storeSalesStatistics = '/ddaigo-platform/statistics/storeSalesStatistics';
 }
