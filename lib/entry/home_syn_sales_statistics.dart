@@ -12,11 +12,14 @@ part 'home_syn_sales_statistics.g.dart';
 @JsonSerializable()
 class SalesStatisticsModel extends Object {
 
+  @JsonKey(name: 'startTime')
+  int startTime;
+
   @JsonKey(name: 'tradeType')
   String tradeType;
 
-  @JsonKey(name: 'startTime')
-  int startTime;
+  @JsonKey(name: 'userId')
+  int userId;
 
   @JsonKey(name: 'mom_startTime')
   int momStartTime;
@@ -26,9 +29,6 @@ class SalesStatisticsModel extends Object {
 
   @JsonKey(name: 'endTime')
   int endTime;
-
-  @JsonKey(name: 'userId')
-  int userId;
 
   @JsonKey(name: 'userStoreList')
   List<String> userStoreList;
@@ -50,40 +50,38 @@ class SalesStatisticsModel extends Object {
 
 @JsonSerializable()
 class StoreSales extends Object {
-
   @JsonKey(name: 'storeNo')
   String storeNo;
 
   @JsonKey(name: 'buyAmount')
-  double buyAmount;
+  String buyAmount;
 
   @JsonKey(name: 'mom_riseRate')
   String momRiseRate;
 
   @JsonKey(name: 'salesAmount')
-  double salesAmount;
+  String salesAmount;
 
   @JsonKey(name: 'goodsQuantity')
-  int goodsQuantity;
+  String goodsQuantity;
 
   @JsonKey(name: 'storeName')
   String storeName;
 
   @JsonKey(name: 'orderQuantity')
-  int orderQuantity;
+  String orderQuantity;
 
   @JsonKey(name: 'grossProfitRate')
   String grossProfitRate;
 
   @JsonKey(name: 'mom_salesAmount')
-  double momSalesAmount;
+  String momSalesAmount;
 
   @JsonKey(name: 'perCustomerSales')
   String perCustomerSales;
 
   @JsonKey(name: 'jointRate')
   String jointRate;
-
 
   bool isTitle = false;
   bool isLeftLab = false;
@@ -104,31 +102,32 @@ class StoreSales extends Object {
 class AllSalesStatistics extends Object {
 
   @JsonKey(name: 'buyAmount')
-  double buyAmount;
+  String buyAmount;
 
   @JsonKey(name: 'mom_riseRate')
   String momRiseRate;
 
   @JsonKey(name: 'salesAmount')
-  double salesAmount;
+  String salesAmount;
 
   @JsonKey(name: 'goodsQuantity')
-  int goodsQuantity;
+  String goodsQuantity;
 
   @JsonKey(name: 'orderQuantity')
-  int orderQuantity;
+  String orderQuantity;
 
   @JsonKey(name: 'grossProfitRate')
   String grossProfitRate;
 
   @JsonKey(name: 'mom_salesAmount')
-  double momSalesAmount;
+  String momSalesAmount;
 
   @JsonKey(name: 'perCustomerSales')
   String perCustomerSales;
 
   @JsonKey(name: 'jointRate')
   String jointRate;
+
 
   AllSalesStatistics(this.buyAmount,this.momRiseRate,this.salesAmount,this.goodsQuantity,this.orderQuantity,this.grossProfitRate,this.momSalesAmount,this.perCustomerSales,this.jointRate,);
 

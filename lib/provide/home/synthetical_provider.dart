@@ -30,8 +30,17 @@ class HomeSyntheticalProvider with ChangeNotifier {
         "userId": 23
       }
     };
-
-    return NetUtils.post(Api.get_home_storeSalesStatistics, params, null)
+    var p2 = {
+      "data": {
+        "startTime": 1546272000000,
+        "tradeType": "APP",
+        "userId": 23,
+        "mom_startTime": 1525363200000,
+        "mom_endTime": 1546271999000,
+        "endTime": 1567180799000
+      }
+    };
+    return NetUtils.post(Api.get_home_storeSalesStatistics, p2, null)
         .then((it) {
       if (it.result) {
         SalesStatisticsModel data = SalesStatisticsModel.fromJson(it.data);

@@ -68,7 +68,7 @@ enum ViewState {
 
 /// 无数据
 Widget emptyCenterWidget(String msg) =>
-    Center(child: Text(msg.isEmpty ?? "内容空"));
+    Center(child: Text(msg.isEmpty ? "内容空" : msg));
 
 Widget get loadingShimmerWidget => SingleChildScrollView(
       physics: NeverScrollableScrollPhysics(),

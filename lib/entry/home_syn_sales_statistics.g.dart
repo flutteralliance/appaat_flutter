@@ -16,19 +16,15 @@ SalesStatisticsModel _$SalesStatisticsModelFromJson(Map<String, dynamic> json) {
     json['userId'] as int,
     (json['userStoreList'] as List)?.map((e) => e as String)?.toList(),
     (json['storeSalesList'] as List)
-        ?.map((e) => e == null
-            ? null
-            : StoreSales.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null ? null : StoreSales.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     json['allSalesStatistics'] == null
         ? null
-        : AllSalesStatistics.fromJson(
-            json['allSalesStatistics'] as Map<String, dynamic>),
+        : AllSalesStatistics.fromJson(json['allSalesStatistics'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$SalesStatisticsModelToJson(
-        SalesStatisticsModel instance) =>
+Map<String, dynamic> _$SalesStatisticsModelToJson(SalesStatisticsModel instance) =>
     <String, dynamic>{
       'tradeType': instance.tradeType,
       'startTime': instance.startTime,
@@ -43,22 +39,21 @@ Map<String, dynamic> _$SalesStatisticsModelToJson(
 
 StoreSales _$StoreSalesFromJson(Map<String, dynamic> json) {
   return StoreSales(
-    json['storeNo'] as String,
-    (json['buyAmount'] as num)?.toDouble(),
-    json['mom_riseRate'] as String,
-    (json['salesAmount'] as num)?.toDouble(),
-    json['goodsQuantity'] as int,
-    json['storeName'] as String,
-    json['orderQuantity'] as int,
-    json['grossProfitRate'] as String,
-    (json['mom_salesAmount'] as num)?.toDouble(),
-    json['perCustomerSales'] as String,
-    json['jointRate'] as String,
+    (json['storeNo'] as dynamic).toString(),
+    (json['buyAmount'] as dynamic).toString(),
+    (json['mom_riseRate'] as dynamic).toString(),
+    (json['salesAmount'] as dynamic).toString(),
+    (json['goodsQuantity'] as dynamic).toString(),
+    (json['storeName'] as dynamic).toString(),
+    (json['orderQuantity'] as dynamic).toString(),
+    (json['grossProfitRate'] as dynamic).toString(),
+    (json['mom_salesAmount'] as dynamic).toString(),
+    (json['perCustomerSales'] as dynamic).toString(),
+    (json['jointRate'] as dynamic).toString(),
   );
 }
 
-Map<String, dynamic> _$StoreSalesToJson(StoreSales instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$StoreSalesToJson(StoreSales instance) => <String, dynamic>{
       'storeNo': instance.storeNo,
       'buyAmount': instance.buyAmount,
       'mom_riseRate': instance.momRiseRate,
@@ -74,20 +69,19 @@ Map<String, dynamic> _$StoreSalesToJson(StoreSales instance) =>
 
 AllSalesStatistics _$AllSalesStatisticsFromJson(Map<String, dynamic> json) {
   return AllSalesStatistics(
-    (json['buyAmount'] as num)?.toDouble(),
-    json['mom_riseRate'] as String,
-    (json['salesAmount'] as num)?.toDouble(),
-    json['goodsQuantity'] as int,
-    json['orderQuantity'] as int,
-    json['grossProfitRate'] as String,
-    (json['mom_salesAmount'] as num)?.toDouble(),
-    json['perCustomerSales'] as String,
-    json['jointRate'] as String,
+    (json['buyAmount'] as dynamic).toString(),
+    (json['mom_riseRate'] as dynamic).toString(),
+    (json['salesAmount'] as dynamic).toString(),
+    (json['goodsQuantity'] as dynamic).toString(),
+    (json['orderQuantity'] as dynamic).toString(),
+    (json['grossProfitRate'] as dynamic).toString(),
+    (json['mom_salesAmount'] as dynamic).toString(),
+    (json['perCustomerSales'] as dynamic).toString(),
+    (json['jointRate'] as dynamic).toString(),
   );
 }
 
-Map<String, dynamic> _$AllSalesStatisticsToJson(AllSalesStatistics instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AllSalesStatisticsToJson(AllSalesStatistics instance) => <String, dynamic>{
       'buyAmount': instance.buyAmount,
       'mom_riseRate': instance.momRiseRate,
       'salesAmount': instance.salesAmount,

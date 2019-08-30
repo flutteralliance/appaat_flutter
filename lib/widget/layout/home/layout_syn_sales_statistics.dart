@@ -310,10 +310,12 @@ class SalesStatisticsWidget extends BaseStatelessWidget {
     /// 折线
     List<LinearSales> listSalesData = [];
 
+    printLog(list.toString());
+
     list.forEach((it) {
       if (it.storeNo.isNotEmpty) {
-        barSalesData.add(LinearSales('${it.storeName}', it.salesAmount.toInt()));
-        listSalesData.add(LinearSales('${it.storeName}', getGrossProfitRate(it.grossProfitRate)));
+        barSalesData.add(LinearSales('${it.storeName}', getStrNum(it.salesAmount)));
+        listSalesData.add(LinearSales('${it.storeName}', getStrNum(it.grossProfitRate)));
       }
     });
 
@@ -336,11 +338,11 @@ class SalesStatisticsWidget extends BaseStatelessWidget {
     ];
   }
 
-  int getGrossProfitRate(String num) {
+  double getStrNum(String num) {
     if (num.isEmpty || num == '-') {
       return 0;
     } else {
-      return int.parse(num.replaceAll('%', ''));
+      return double.parse(num.replaceAll('%', ''));
     }
   }
 }
@@ -348,7 +350,7 @@ class SalesStatisticsWidget extends BaseStatelessWidget {
 /// Sample linear data type.
 class LinearSales {
   final String labName;
-  final int sales;
+  final double sales;
 
   LinearSales(this.labName, this.sales);
 }
